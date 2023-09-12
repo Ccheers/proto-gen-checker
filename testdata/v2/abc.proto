@@ -1,0 +1,7 @@
+syntax = "proto3";
+package abc.v2;
+option go_package = "github.com/ccheers/proto-gen-checker/testdata/v2";
+
+message TestRepeatedV2 {
+  repeated uint32 aaa = 4;
+}

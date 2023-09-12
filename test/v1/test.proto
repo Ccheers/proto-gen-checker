@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package com.example.tutorial;
+option go_package = "github.com/ccheers/proto-gen-checker/test/v1";
+import "proto/checker/checker.proto";
+
+message Test {
+  uint32 u32 = 1 [
+    json_name = "123",
+    (com.github.ccheers.proto.checker.rule) = {
+      u32: {lt: 0}
+      error_msg: "u32 必须要大于\" 0 \""
+    }
+  ];
+}

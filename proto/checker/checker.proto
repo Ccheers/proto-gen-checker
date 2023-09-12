@@ -1,0 +1,122 @@
+syntax = "proto3";
+package com.github.ccheers.proto.checker;
+option go_package = "github.com/ccheers/proto-gen-checker/proto/checker";
+
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.FieldOptions {
+  optional CheckRule rule = 59935;
+}
+
+message CheckRule {
+  oneof rule {
+    UInt32 u32 = 1;
+    UInt64 u64 = 2;
+    Int32 i32 = 3;
+    Int64 i64 = 4;
+    Float float = 5; // float32 in go
+    Double double = 6; // float 64 in go
+    String string = 8;
+    Bytes bytes = 9;
+    Repeated repeated = 10;
+    Any any = 11;
+    Enum enum = 12;
+    Map map = 13;
+  }
+  string error_msg = 101;
+}
+
+message UInt32 {
+  optional uint32 lt = 1;
+  optional uint32 gt = 2;
+  optional uint32 lte = 3;
+  optional uint32 gte = 4;
+}
+
+message UInt64 {
+  optional uint64 lt = 1;
+  optional uint64 gt = 2;
+  optional uint64 lte = 3;
+  optional uint64 gte = 4;
+}
+message Int32 {
+  optional int32 lt = 1;
+  optional int32 gt = 2;
+  optional int32 lte = 3;
+  optional int32 gte = 4;
+}
+
+message Int64 {
+  optional int64 lt = 1;
+  optional int64 gt = 2;
+  optional int64 lte = 3;
+  optional int64 gte = 4;
+}
+
+message Double {
+  optional double lt = 1;
+  optional double gt = 2;
+  optional double lte = 3;
+  optional double gte = 4;
+}
+
+message Float {
+  optional float lt = 1;
+  optional float gt = 2;
+  optional float lte = 3;
+  optional float gte = 4;
+}
+
+message String {
+  // 最小长度按 UTF8字符 来计算
+  optional uint64 min_len = 2;
+
+  // 最大长度按 UTF8字符 来计算
+  optional uint64 max_len = 3;
+
+  // 最小长度按 字节数 计算
+  optional uint64 min_bytes = 4;
+
+  // 最大长度按 字节数 计算
+  optional uint64 max_bytes = 5;
+
+  // 正则通配符
+  optional string pattern = 6;
+}
+
+message Bytes {
+  // 最小长度按 字节数 计算
+  optional uint64 min_len = 2;
+  // 最大长度按 字节数 计算
+  optional uint64 max_len = 3;
+}
+
+message Repeated {
+  // 是否唯一
+  optional bool unique = 1;
+  // 最小长度
+  optional uint64 min_len = 2;
+  // 最大长度
+  optional uint64 max_len = 3;
+  // 子项规则
+  optional CheckRule items = 4;
+}
+
+message Any {
+  bool required = 1;
+}
+
+message Enum {
+  // 是否必须是指定的 enum
+  optional bool defined_only = 2;
+}
+message Map {
+  // key 规则
+  optional CheckRule keys = 1;
+  // value 规则
+  optional CheckRule values = 2;
+  // 最小长度
+  optional uint64 min_len = 3;
+  // 最大长度
+  optional uint64 max_len = 4;
+}
