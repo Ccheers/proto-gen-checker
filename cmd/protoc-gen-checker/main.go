@@ -31,6 +31,11 @@ func main() {
 	plugin, err := interPlugin.New(
 		&c,
 		generator.NewU32(),
+		generator.NewU64(),
+		generator.NewI32(),
+		generator.NewI64(),
+		generator.NewF32(),
+		generator.NewF64(),
 	)
 	if err != nil {
 		panic(err)
